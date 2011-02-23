@@ -171,9 +171,9 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
     assign("log.like",0,penden.env)
     assign("AIC",0,penden.env)
     assign("BIC",0,penden.env)
-    obj <- list(penden.env=penden.env)
-    class(obj) <- "pencopula"
-    return(obj)
+    #obj <- list(penden.env=penden.env)
+    class(penden.env) <- "pencopula"
+    return(penden.env)
   }
 
   #print(get("f.hat.val",penden.env))
@@ -204,9 +204,9 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
     assign("log.like",0,penden.env)
     assign("AIC",0,penden.env)
     assign("BIC",0,penden.env)
-    obj <- list(penden.env=penden.env)
-    class(obj) <- "pencopula"
-    return(obj)
+    #obj <- list(penden.env=penden.env)
+    class(penden.env) <- "pencopula"
+    return(penden.env)
   }
 
   #if(!fix.lambda) {
