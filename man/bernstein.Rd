@@ -1,11 +1,15 @@
 \name{bernstein}
 \alias{bernstein}
+\alias{int.bernstein}
 \title{Calculating a bernstein polynomial.}
 \description{
- Calculating a bernstein polynomial. 
+ Calculating a bernstein polynomial, transformed to be a
+ density. 'int.bernstein' calculates the integral of the bernstein
+ density polynomial.
 }
 \usage{
 bernstein(v,x,n)
+int.bernstein(x,n)
 }
 
 \arguments{
@@ -15,13 +19,16 @@ bernstein(v,x,n)
 }
 
 \value{
-  The bernstein polynomial basis is created using the function 'apply'
+  The bernstein polynomial density basis is created using the function 'apply'
   for some data 'x'.
 
   K <- 3
   index.b <- matrix(0:2^K)
   ## Bernstein polynomial 
   B <- apply(index.b,1,bernstein,x,n=2^K)
+
+  The integral of the Basis B of degree n is:
+  B <- int.bernstein(x,n=2^K)
 }
 
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}

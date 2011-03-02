@@ -13,7 +13,7 @@
   D <- get("D",x)
   alpha <- get("alpha",x)
   base <- get("base",x)
-  if(int & base=="Bernstein") stop("Distribution function is not supported for Bernstein polynomials")
+  #if(int & base=="Bernstein") stop("Distribution function is not supported for Bernstein polynomials")
   if(!is.null(cond)) cond.true <- TRUE
   else cond.true <-  FALSE
 

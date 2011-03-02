@@ -28,6 +28,12 @@
       if(q==2) index.h <- c(1,2,3)
       int.B.tilde <- distr.func.help(B.tilde,knots,penden.env,q,y=x,index.h)
     }
+
+    if(int&base=="Bernstein") {
+      if(q==1) index.h <- c(1,2)
+      if(q==2) index.h <- c(1,2,3)
+      int.B.tilde <- int.bernstein(x,n=length(0:2^K))
+    }
     
     for ( K in 1:d)
       {
@@ -55,6 +61,11 @@
           index.h <- seq(max(index.h)+1,max(index.h)+length(index))
           BB.int <- distr.func.help(BB,knots,penden.env,q,y=x,index.h)
         }
+
+        if(int&base=="Bernstein") {
+          BB.int <- int.bernstein(x,n=length(0:2^K))[,index]
+        }
+        
         dimBB <- dim(BB)
        
         if(dimBB[1]>1) {

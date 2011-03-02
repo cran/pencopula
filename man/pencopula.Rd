@@ -87,6 +87,11 @@ the estimation approach.
 For a fast overview of the main results, one can use the function 'print.pencopula()'.
 }
 
+\note{If the estimation with the current setup does not work, e.g. the
+  quadratic program can not be solved, the routine returns log.like=0, pen.log.like=0,
+  AIC=0 and BIC=0. Please restart the estimation, e.g. with a different
+  penalty parameter.}
+
 \references{Flexible Copula Density Estimation with Penalized
   Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
