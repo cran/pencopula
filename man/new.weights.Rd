@@ -18,14 +18,17 @@ new.weights(penden.env)
   The new weights are calculated solving a quadratic program. Therefore,
   the derivates of first and second order are needed, 'Derv1.pen' and
   'Derv2.pen'. Moreover, we have to fulfill the side conditions
-  c(u,b)>=0, sum(b)=1 and that the marginal density is uniform. All side
+  c(u,b)>=0, sum(b)=1 and that the marginal densities are uniform. All side
   conditions are saved as 'AA.help' in the environment. There exists two
   different algorithms, due to the fact if one works with or without an
   adaptive grid for the side condition c(u,b)>=0.
 
   If the quadratic program does not find a new feasible solution, the whole
   program terminates. For solving the quadratic program, we use the
-  function 'solve.QP' from the  R-package 'quadprog'. 
+  function 'solve.QP' from the  R-package 'quadprog'.
+
+  Using a Bernstein polynomial basis, the side conditions are sum(b)=1
+  ,b>=0 and that the marginal densities are uniform.
 }
 
 \note{For high dimensional data (p>=4) and high hierachy level 'd' of the

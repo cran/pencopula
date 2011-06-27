@@ -11,8 +11,8 @@ The package 'pencopula' offers routines for estimating multivariate penalized co
 \tabular{ll}{
 Package: \tab pencopula\cr
 Type: \tab Package\cr
-Version: \tab 0.2.1\cr
-Date: \tab 2011-03-02\cr
+Version: \tab 0.3\cr
+Date: \tab 2011-06-27\cr
 License: GPL (>= 2)
 LazyLoad: \tab yes\cr
 }
@@ -25,5 +25,5 @@ The packages contributes the function 'pencopula()' for estimating copula densit
 \keyword{nonparametric}
 \examples{
 Y <- cbind(runif(200),runif(200))
-plot(pencopula(Y,d=4,D=4,lambda=rep(100000,2)))
+plot(pencopula(Y,d=4,D=4,lambda=rep(100000,2),base="B-spline"))
 }

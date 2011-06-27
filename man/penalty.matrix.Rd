@@ -26,7 +26,9 @@ penalty.matrix(penden.env, temp = FALSE)
 
   \eqn{P(\lambda)_j=\left(\bigotimes_{l=1}^{j-1}{I}\right) \otimes \{({A^{-1})^T} P {A}^{-1}\} \otimes \left(\bigotimes_{l=j+1}^p {I}\right)}
 
-The needed values are calculated or saved in the environment 'penden.env'.
+  The needed values are calculated or saved in the environment 'penden.env'.
+
+  There is no penalty used for the Bernstein polynomial basis, P=0.
 }
 
 \value{

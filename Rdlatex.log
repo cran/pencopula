@@ -1,0 +1,24 @@
+Hmm ... looks like a package
+Converting Rd files to LaTeX ...
+  Derv1.Rd
+  Derv2.Rd
+  DeutscheBank.Rd
+  Lufthansa.Rd
+  bernstein.Rd
+  distr.func.help.Rd
+  f.hat.val.Rd
+  grid.points.Rd
+  hierarch.bs.Rd
+  knots.start.Rd
+  my.IC.Rd
+  my.bspline.Rd
+  my.loop.Rd
+  new.weights.Rd
+  pen.log.like.Rd
+  penalty.matrix.Rd
+  pencopula-package.Rd
+  pencopula.Rd
+  pendenForm.Rd
+  plot.pencopula.Rd
+  print.pencopula.Rd
+Creating pdf output from LaTeX ...

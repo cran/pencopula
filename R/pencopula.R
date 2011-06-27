@@ -32,6 +32,7 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
   assign("no",FALSE,penden.env)
   assign("max.iter",max.iter,penden.env)
   assign("base",base,penden.env)
+  if(base=="Bernstein") adapt.grid <- FALSE
   assign("adapt.grid",adapt.grid,penden.env)
   assign("plot.bsp",plot.bsp,penden.env)
   
@@ -50,8 +51,11 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
 
   dimension <- c(rep(0,q+1),rep(1:d,2**(0:(d-1))))
 
-  if(is.null(lambda)) lambda <- rep(10000,p)
-  if(!is.null(lambda)) if(length(lambda)<p | length(lambda)>p) stop("length of lambda is wrong")
+  if(base=="B-spline") {
+    if(is.null(lambda)) lambda <- rep(10000,p)
+    if(!is.null(lambda)) if(length(lambda)<p | length(lambda)>p) stop("length of lambda is wrong")
+  }
+  if(base=="Bernstein") lambda <- rep(0,p)
   assign("lambda",lambda,penden.env)
 
   assign("dimension",dimension,penden.env)
@@ -101,6 +105,11 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
 
   ####################
 
+  #knots
+  knots.start(penden.env)
+ 
+  #####################
+
   tilde.Psi.d <-  array(NA, dim=c(get("n",penden.env),ddb,p))
  
   for (j in 1:p)
@@ -117,12 +126,6 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
       assign("tilde.PSI.d.D",get("tilde.PSI.d.D",penden.env) * get("tilde.Psi.d",penden.env)[,Index.basis.D[,j],j],penden.env)
     }
 
-
-  ####################
-
-  #knots
-  knots.start(penden.env)
- 
   #####################
 
   #startwerte und gitter berechnen
@@ -147,7 +150,7 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
   #############################
 
   penalty.matrix(penden.env=penden.env)
-
+  
   #############################
 
   liste <- matrix(0,1,3+DD+p)

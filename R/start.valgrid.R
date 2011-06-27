@@ -1,13 +1,13 @@
 start.valgrid <- function(penden.env) {
-
+  
   p <- get("p",penden.env)
   X.knots <- matrix(NA,get("DD",penden.env),p)
   tilde.Psi.d.knots.start.r <-  array(NA, dim=c(dim(X.knots)[1],get("ddb",penden.env),p))
-   
+    
   for(j in 1:p)  X.knots[,j]  <- get("knots.t",penden.env)[get("Index.basis.D",penden.env)[,j]]
   env.extend <- list()
   length.cond <- get("ddb",penden.env)
-
+  
   for(j in 1:p) {
     name <- c(paste("y",j,sep=""))
     env.extend[[noquote(name)]] <- seq(0,1,length=length.cond)
@@ -15,7 +15,7 @@ start.valgrid <- function(penden.env) {
   assign("X.knots.g.all",expand.grid(env.extend),penden.env)
   
   if(get("adapt.grid",penden.env)) grid.points(penden.env)
- 
+  
   if(get("adapt.grid",penden.env)) tilde.Psi.d.knots.start.g <-  array(NA, dim=c(dim(get("X.knots.g",penden.env))[1],get("ddb",penden.env),p))
   tilde.Psi.d.knots.start.g.all <- array(NA, dim=c(dim(get("X.knots.g.all",penden.env))[1],get("ddb",penden.env),p))
   
@@ -40,5 +40,6 @@ start.valgrid <- function(penden.env) {
       assign("tilde.PSI.d.D.knots.start.g.all",get("tilde.PSI.d.D.knots.start.g.all",penden.env) * tilde.Psi.d.knots.start.g.all[,get("Index.basis.D",penden.env)[,j],j],penden.env)
     }
 
-  assign("ck.val",matrix(solve(get("tilde.PSI.d.D.knots.start.r",penden.env),rep(1,get("DD",penden.env)))),penden.env)
+  if(get("base",penden.env)=="B-spline") assign("ck.val",matrix(solve(get("tilde.PSI.d.D.knots.start.r",penden.env),rep(1,get("DD",penden.env)))),penden.env)
+  if(get("base",penden.env)=="Bernstein") assign("ck.val",matrix(rep(1/get("DD",penden.env)),get("DD",penden.env)),penden.env)
 }
