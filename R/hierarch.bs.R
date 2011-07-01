@@ -20,7 +20,7 @@
       #if(q==2) B.tilde <- B.tilde[,-c(1,dim(B.tilde)[2])]
     }
     if(base=="Bernstein") {
-      B.tilde <- apply(matrix(0:(ddb-1)),1,bernstein,x,n=(ddb-1))[,get("k.order",penden.env)]
+      B.tilde <- apply(matrix(0:(ddb-1)),1,bernstein,x,n=(ddb-1))#[,get("k.order",penden.env)]
       dimBB <- dim(B.tilde)
     }
       

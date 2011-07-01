@@ -11,8 +11,8 @@ The package 'pencopula' offers routines for estimating multivariate penalized co
 \tabular{ll}{
 Package: \tab pencopula\cr
 Type: \tab Package\cr
-Version: \tab 0.3\cr
-Date: \tab 2011-06-27\cr
+Version: \tab 0.3.1\cr
+Date: \tab 2011-07-01\cr
 License: GPL (>= 2)
 LazyLoad: \tab yes\cr
 }

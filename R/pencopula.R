@@ -17,7 +17,7 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
   if(is.null(d)) d <- 3 # Anzahl Halbierungen des Intervals [0,1]
   if(is.null(D)) D <- d # max. Hierachiestufe
 
-  if(D<d) d <- D
+  if(base=="B-spline" & D<d) d <- D
   if(base=="Bernstein") {
     D <- 2*d
     pen.order <- 1
@@ -35,21 +35,27 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
   if(base=="Bernstein") adapt.grid <- FALSE
   assign("adapt.grid",adapt.grid,penden.env)
   assign("plot.bsp",plot.bsp,penden.env)
-  
-  dd <- (2**d)+1 # Anzahl Knoten
-  assign("dd",dd,penden.env)
-
-  if(is.null(q)) q <- 1 # Grad des B spline
-  assign("q",q,penden.env)
-
-  ddb <- dd + (q-1) # Anzahl Basisfunktionen
-  assign("ddb",ddb,penden.env)
- 
   p <- get("p",penden.env)  #p Dimension der Kovariablen
+  
+  if(base=="B-spline") {
+    dd <- (2**d)+1 # Anzahl Knoten
+    ddb <- dd + (q-1) # Anzahl Basisfunktionen
+    if(is.null(q)) q <- 1 # Grad des B spline
+    assign("q",q,penden.env)
+  }
+  if(base=="Bernstein") {
+    dd <- d
+    ddb <- dd+1# Anzahl Basisfunktionen
+    DD <- ddb^p
+    assign("DD",DD,penden.env)
+  }
+  assign("dd",dd,penden.env)
+  assign("ddb",ddb,penden.env)
   
   assign("D",D,penden.env) #max. Hierarchiestufe
 
-  dimension <- c(rep(0,q+1),rep(1:d,2**(0:(d-1))))
+  if(base=="B-spline") dimension <- c(rep(0,q+1),rep(1:d,2**(0:(d-1))))
+  if(base=="Bernstein") dimension <- seq(0,D)
 
   if(base=="B-spline") {
     if(is.null(lambda)) lambda <- rep(10000,p)
@@ -63,29 +69,46 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
   
   ##################
 
+  if(base=="B-spline") {  
   #D maximale Hierarchiestufe
-  DIMENSION <- dimension
-  Index.basis <- matrix(1:ddb)
-  index.sparse <- DIMENSION <= D
-  Index.basis.D <- matrix(Index.basis[index.sparse,])
-  DIMENSION <- DIMENSION[index.sparse]
- 
-  for ( j in 2:p)
-    {
-      #print(j)
-      DIMENSION.j <-  kronecker(matrix(1,ddb,1),DIMENSION) + kronecker( dimension, matrix(1, length(DIMENSION),1))
-      Index.basis.plus.1 <- matrix(NA, dim(Index.basis.D)[1] * ddb , j)
-      Index.basis.plus.1[,j] <- kronecker(matrix(1:ddb), matrix(1,dim(Index.basis.D)[1],1))
-      Index.basis.plus.1[, 1:(j-1)] <-  kronecker(matrix(1, ddb,1),Index.basis.D)
-      index.sparse <- DIMENSION.j <= D
-      Index.basis.D <- Index.basis.plus.1[index.sparse,]
-      DIMENSION <- DIMENSION.j[index.sparse]
+    DIMENSION <- dimension
+    Index.basis <- matrix(1:ddb)
+    index.sparse <- DIMENSION <= D
+    Index.basis.D <- matrix(Index.basis[index.sparse,])
+    DIMENSION <- DIMENSION[index.sparse]
+    
+    for ( j in 2:p)
+      {
+                                        #print(j)
+        DIMENSION.j <-  kronecker(matrix(1,ddb,1),DIMENSION) + kronecker( dimension, matrix(1, length(DIMENSION),1))
+        Index.basis.plus.1 <- matrix(NA, dim(Index.basis.D)[1] * ddb , j)
+        Index.basis.plus.1[,j] <- kronecker(matrix(1:ddb), matrix(1,dim(Index.basis.D)[1],1))
+        Index.basis.plus.1[, 1:(j-1)] <-  kronecker(matrix(1, ddb,1),Index.basis.D)
+        index.sparse <- DIMENSION.j <= D
+        Index.basis.D <- Index.basis.plus.1[index.sparse,]
+        DIMENSION <- DIMENSION.j[index.sparse]
+      }
+    DD <- dim(Index.basis.D)[1] # Dimension of sparse grid basis
+    assign("DD",DD,penden.env) # DD Anzahl Koeffizienten
+  }
+  if(base=="Bernstein") {
+    assign("knots",seq(0,1,length=ddb),penden.env)
+  
+    Index.basis.D <- matrix(NA,DD,p)
+    help.val <- rep(seq(1,ddb),ddb)
+    help.val2 <- sort(help.val)
+    help <- cbind(help.val,help.val2)
+    if(p>2) {
+      for(j in 3:p) {
+        help <- kronecker(matrix(1,ddb,1),help)
+        help <- cbind(help,sort(help[,(j-1)]))
+      }
     }
-  DD <- dim(Index.basis.D)[1] # Dimension of sparse grid basis
-
-  assign("DD",DD,penden.env) # DD Anzahl Koeffizienten
+    Index.basis.D <- help
+  }
   assign("Index.basis.D",Index.basis.D,penden.env)
-
+  
+  
   ###################
 
   # Matrix zur Erstellung der marginalen Spline Koeffizienten

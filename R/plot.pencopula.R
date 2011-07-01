@@ -13,6 +13,7 @@
   D <- get("D",x)
   alpha <- get("alpha",x)
   base <- get("base",x)
+  DD <- get("DD",x)
   #if(int & base=="Bernstein") stop("Distribution function is not supported for Bernstein polynomials")
   if(!is.null(cond)) cond.true <- TRUE
   else cond.true <-  FALSE
@@ -46,7 +47,7 @@
           grid <- unique(expand.grid(env.extend)) 
         }
   
-        tilde.Psi.d <-  array(NA, dim=c(dim(grid)[1],(2**d)+q,p))
+        tilde.Psi.d <-  array(NA, dim=c(dim(grid)[1],get("ddb",x),p))
      
         for (j in 1:p)
           {
@@ -68,15 +69,19 @@
           lam2 <- get("lambda",x)[2]
         }
                 
-        if(is.null(main.txt) & !cond.true) {
+        if(is.null(main.txt) & !cond.true & base=="B-Spline") {
           main.txt <- substitute("d="*a*", D="*b*", "*c*"="*d*", "*e*"="*f*", pen.order="*g*", q="*h, list(a=d,b=D,c=parse(text="lambda[1]")[[1]],d=lam1, e=parse(text="lambda[2]")[[1]],f=lam2,g=pen.order,h=q))
           main.txt <- as.expression(main.txt)
         }
-        if(is.null(main.txt) & cond.true) {
+        if(is.null(main.txt) & cond.true & base=="B-Spline") {
           main.txt <- substitute("d="*a*", D="*b*", pen.order="*g, list(a=d,b=D,g=pen.order))
           main.txt <- as.expression(main.txt)
         }
-          
+        if(is.null(main.txt) & base=="Bernstein") {
+          main.txt <- substitute("Marg. Coeff.="*a*", Number all Coeff.="*b,list(a=ddb,b=DD))
+          main.txt <- as.expression(main.txt)
+        }
+           
         k <- dim(x$liste)[1]
         log.like <- round(get("log.like",x),3)
         pen.log.like <- round(get("pen.log.like",x),3)

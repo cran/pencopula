@@ -12,6 +12,7 @@ new.weights <- function(penden.env) {
   }
   prob.val2 <- 1
   meq <- 1+p*(length(vec))
+  assign("linear.con",meq,penden.env)
 
   if(get("base",penden.env)=="Bernstein") {
     bvec <- c(rep(0,1+p*length(vec)),-get("ck.val",penden.env)+rep(1e-05,length(get("ck.val",penden.env))))

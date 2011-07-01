@@ -39,7 +39,7 @@ start.valgrid <- function(penden.env) {
       if(get("adapt.grid",penden.env)) assign("tilde.PSI.d.D.knots.start.g",get("tilde.PSI.d.D.knots.start.g",penden.env) * tilde.Psi.d.knots.start.g[,get("Index.basis.D",penden.env)[,j],j],penden.env)
       assign("tilde.PSI.d.D.knots.start.g.all",get("tilde.PSI.d.D.knots.start.g.all",penden.env) * tilde.Psi.d.knots.start.g.all[,get("Index.basis.D",penden.env)[,j],j],penden.env)
     }
-
   if(get("base",penden.env)=="B-spline") assign("ck.val",matrix(solve(get("tilde.PSI.d.D.knots.start.r",penden.env),rep(1,get("DD",penden.env)))),penden.env)
   if(get("base",penden.env)=="Bernstein") assign("ck.val",matrix(rep(1/get("DD",penden.env)),get("DD",penden.env)),penden.env)
+  #if((get("base",penden.env)=="Bernstein") & (p>2)) assign("ck.val",matrix(solve(get("tilde.PSI.d.D.knots.start.r",penden.env),rep(1,get("DD",penden.env)))),penden.env)
 }
