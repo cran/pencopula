@@ -1,3 +1,4 @@
+
 pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALSE,
                     lambda=NULL,pen.order=2,adapt.grid=FALSE,add=TRUE,
                     alpha=0,symmetric=TRUE,data.frame=parent.frame()) {
@@ -196,6 +197,7 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
     assign("pen.log.like",0,penden.env)
     assign("log.like",0,penden.env)
     assign("AIC",0,penden.env)
+    assign("cAIC",0,penden.env)
     assign("BIC",0,penden.env)
     #obj <- list(penden.env=penden.env)
     class(penden.env) <- "pencopula"
@@ -229,19 +231,12 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
     assign("pen.log.like",0,penden.env)
     assign("log.like",0,penden.env)
     assign("AIC",0,penden.env)
+    assign("cAIC",0,penden.env)
     assign("BIC",0,penden.env)
     #obj <- list(penden.env=penden.env)
     class(penden.env) <- "pencopula"
     return(penden.env)
   }
-
-  #if(!fix.lambda) {
-  #  new.lambda(penden.env)
-  #  penalty.matrix(penden.env,temp=TRUE)
-  #  pen.log.like(penden.env,temp.lambda=TRUE)
-  #  marg.likelihood(penden.env,temp=TRUE)
-  #}
-  #else assign("no.lambda",FALSE,penden.env)
 
   my.loop(penden.env)
   

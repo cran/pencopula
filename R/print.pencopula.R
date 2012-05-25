@@ -7,7 +7,7 @@ print.pencopula <- function(x,...) {
   q <- get("q",x)
   cat("\nNumber of marginal observations: ",get("n",x),"\n",sep="")
   cat("\nNumber of covariates: ",p,"\n",sep="")
-  cat("\nNumber of estimated coefficients: ",ddb,"\n",sep="")
+  cat("\nNumber of estimated coefficients: ",get("DD",x),"\n",sep="")
   if(get("base",x)=="B-spline") cat("\nHierarchy level of marginal hierarchical B-Spline d: ",d,"\n",sep="")
   if(get("base",x)=="Bernstein") cat("\nNumber of marginal Bernstein Polynomials: ",ddb,"\n",sep="")
   if(base=="B-spline") cat("\nMaximum hierarchy level of hierarchical B-Spline basis D: ",D,"\n",sep="")
@@ -18,6 +18,7 @@ print.pencopula <- function(x,...) {
   cat("\nlambda: ",names,"\n",sep="")
   cat("\nlog-likelihood: ",get("log.like",x),"\n",sep="")
   cat("\nAIC: ",get("AIC",x),"\n",sep="")
+  cat("\ncAIC: ",get("cAIC",x),"\n",sep="")
   cat("\nBIC: ",get("BIC",x),"\n",sep="")
 }
 

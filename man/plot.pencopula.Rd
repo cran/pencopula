@@ -7,9 +7,10 @@
   copula distrubtion, using the R-package 'lattice'.}
 
 \usage{
-plot.pencopula(x, val = NULL, marg = TRUE, plot = TRUE, int = FALSE,
+\method{plot}{pencopula}(x, val = NULL, marg = TRUE, plot = TRUE, int = FALSE,
 main.txt = NULL, sub.txt = NULL, contour = FALSE, cond = NULL, cuts =
-20, cex = 1, cex.axes = 1, xlab = NULL, ylab = NULL, zlab=NULL,...)
+20, cex = 1, cex.axes = 1, cex.contour=1, xlab = NULL, ylab = NULL,
+zlab=NULL, biv.margin=NULL, show.observ=FALSE,...)
 }
 
 \arguments{
@@ -35,11 +36,20 @@ main.txt = NULL, sub.txt = NULL, contour = FALSE, cond = NULL, cuts =
     and third covariates vary.}
   \item{cuts}{Number of cuts for the contour plots, if contour=TRUE.}
   \item{cex}{Default = 1, determing the size of the main of the plot.}
-  \item{cex.axes}{Default = 1, determing the size of the labels at the axes.}
+  \item{cex.axes}{Default = 1, determing the size of the labels at the
+    axes.}
+  \item{cex.contour}{Default = 1, determing the size of the labels at the
+    cuts of the contourplot.}
   \item{xlab}{Default = NULL and no text is printed at the xlab}
   \item{ylab}{Default = NULL and no text is printed at the ylab}
   \item{zlab}{Default = NULL and 'density' is printed at the zlab for
     int=FALSE and 'distribution' for int=TRUE.}
+  \item{biv.margin}{Determines for which parameter the bivariate
+    marginal distribution/density is presented.}
+  \item{show.observ}{Default = FALSE. If TRUE, plotting the original observation
+    into a contourplot. For multivariate copulas the data corresponding
+    to 'biv.margin' is plotted. Show.observ is not possible in
+    combination with option 'cond'.}
   \item{...}{further arguments}
 }
 

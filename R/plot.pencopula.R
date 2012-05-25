@@ -1,7 +1,8 @@
  plot.pencopula <- function(x,val=NULL,marg=TRUE,plot=TRUE,int=FALSE,main.txt=NULL,
-                    sub.txt=NULL,contour=FALSE,cond=NULL,cuts=20,cex=1,cex.axes=1,
-                    xlab=NULL,ylab=NULL,zlab=NULL,...) {
+                    sub.txt=NULL,contour=FALSE,cond=NULL,cuts=20,cex=1,cex.axes=1,cex.contour=1,
+                    xlab=NULL,ylab=NULL,zlab=NULL,biv.margin=NULL,show.observ=FALSE,...) {
   library(lattice)
+  library(latticeExtra)
   env <- list()
   p <- get("p",x)
   q <- get("q",x)
@@ -15,18 +16,19 @@
   base <- get("base",x)
   DD <- get("DD",x)
   #if(int & base=="Bernstein") stop("Distribution function is not supported for Bernstein polynomials")
-  if(!is.null(cond)) cond.true <- TRUE
-  else cond.true <-  FALSE
+  if(!is.null(cond)) cond.true <- TRUE  else cond.true <-  FALSE
 
   if(is.null(val))
     {
-      if(p!=2 & !cond.true) stop("geht nicht!")
+      #browser()
+      if(p!=2 & (!cond.true & is.null(biv.margin))) stop("geht nicht!")
       else {
         if(p==2) {
 	    x.grid <- seq(0,1,length=21)
             grid <- expand.grid(y1=x.grid, y2=x.grid)
+            show.ob <- c(1,2)
         }  
-        if(cond.true) {
+        if(cond.true & is.null(biv.margin)) {
           if((length(cond))!=p) stop("change in the input for cond")
           list.full <- which(cond==-1)
           list.cond <- (1:p)[-list.full]
@@ -46,23 +48,44 @@
           }
           grid <- unique(expand.grid(env.extend)) 
         }
-  
-        tilde.Psi.d <-  array(NA, dim=c(dim(grid)[1],get("ddb",x),p))
-     
-        for (j in 1:p)
-          {
-            if(int) tilde.Psi.d[,,j] <-  hierarch.bs(grid[,j], d = d, plot.bsp = FALSE,typ=3,penden.env=x,int=TRUE)$int.B.tilde
-            else tilde.Psi.d[,,j] <-  hierarch.bs(grid[,j], d = d, plot.bsp = FALSE,typ=3,penden.env=x,int=FALSE)$B.tilde
+        if(is.null(biv.margin)) {
+          tilde.Psi.d <-  array(NA, dim=c(dim(grid)[1],get("ddb",x),p))
+          for (j in 1:p)
+            {
+              if(int) tilde.Psi.d[,,j] <-  hierarch.bs(grid[,j], d = d, plot.bsp = FALSE,typ=3,penden.env=x,int=TRUE)$int.B.tilde else tilde.Psi.d[,,j] <-  hierarch.bs(grid[,j], d = d, plot.bsp = FALSE,typ=3,penden.env=x,int=FALSE)$B.tilde
+            }
+          tilde.PSI.d.D <- tilde.Psi.d[,Index.basis.D[,1],1]
+          for (j in 2:p)
+            {        
+              tilde.PSI.d.D <- tilde.PSI.d.D * tilde.Psi.d[,Index.basis.D[,j],j]
+            }                                        #browser()
+          grid[["plot"]] <- tilde.PSI.d.D%*%ck
+        }
+        if(!is.null(biv.margin)) {
+   
+          env.extend <- list()
+          for(j in 1:p) {
+            name <- c(paste("y",j,sep=""))
+            env[[noquote(name)]] <- seq(0,1,length=21)
           }
-        
-        tilde.PSI.d.D <- tilde.Psi.d[,Index.basis.D[,1],1]
+ 
+          grid <- unique(expand.grid(env)) 
+          tilde.Psi.d <-  array(NA, dim=c(dim(grid)[1],get("ddb",x),p))
+          for (j in biv.margin)
+            {
+              if(int) tilde.Psi.d[,,j] <-  hierarch.bs(grid[,j], d = d, plot.bsp = FALSE,typ=3,penden.env=x,int=TRUE)$int.B.tilde else tilde.Psi.d[,,j] <-  hierarch.bs(grid[,j], d = d, plot.bsp = FALSE,typ=3,penden.env=x,int=FALSE)$B.tilde
+            }
+          k <- seq(1,p)[-biv.margin]
+
+          for(j in k) tilde.Psi.d[,,j] <- matrix(rep(1,dim(grid)[1]*get("ddb",x),nrow=dim(grid)[1]))
+
+          tilde.PSI.d.D <- tilde.Psi.d[,Index.basis.D[,1],1]
+          for(j in 2:p)  tilde.PSI.d.D <- tilde.PSI.d.D * tilde.Psi.d[,Index.basis.D[,j],j]
+            
         #browser()
-        for (j in 2:p)
-          {        
-            tilde.PSI.d.D <- tilde.PSI.d.D * tilde.Psi.d[,Index.basis.D[,j],j]
-          }
-        #browser()
-        grid[["plot"]] <- tilde.PSI.d.D%*%ck
+          grid[["plot"]] <- tilde.PSI.d.D%*%ck
+          show.ob <- biv.margin
+        }
 
         if(!cond.true) {
           lam1 <- get("lambda",x)[1]
@@ -97,15 +120,30 @@
           hh <- c("y1","y2")
           values <- as.formula(paste("plot~",paste(hh,collapse="*"),sep=""))
         }
-       
+        if(!is.null(biv.margin)) {
+          values <- c()
+          for(j in biv.margin) values <- c(values,paste("y",j,sep=""))
+          values <- as.formula(paste("plot~",paste(values,collapse="*"),sep=""))
+        }
+     
         if(!contour) obj1 <- wireframe(values,data=grid,outer=TRUE,sub=sub.txt,zlab=list(label=z.txt,cex=cex.axes),xlab=list(cex=cex.axes,label=xlab),
                                        ylab=list(cex=cex.axes,label=ylab),scales=list(arrows=FALSE,col="black",font=3,x=list(cex=cex),y=list(cex=cex),z=list(cex=cex)),
                                        main=main.txt,shade=TRUE,zlim=c(0,max(grid)), par.settings = list(axis.line = list(col = "transparent")),
                                        par.box = c(col = "black"))
-        else obj1 <- contourplot(values, data=grid,outer=TRUE,sub=sub.txt,zlab=list(label=z.txt,cex=cex.axes),xlab=list(label=xlab,cex=cex.axes),
+        if(contour&!show.observ) obj1 <- contourplot(values, data=grid,outer=TRUE,sub=sub.txt,zlab=list(label=z.txt,cex=cex.axes),xlab=list(label=xlab,cex=cex.axes),
                                  ylab=list(label=ylab,cex=cex.axes),scales=list(arrows=FALSE,col="black",font=3,cex=cex),
-                                 zlim=c(0,max(grid)),main=main.txt,shade=TRUE,cuts=cuts)
-        
+                                 zlim=c(0,max(grid)),main=main.txt,shade=TRUE,cuts=cuts,subscripts=TRUE)
+
+        if(contour&show.observ) {
+          grid['xx'] <- c(get("Y",x)[,biv.margin[1]],rep(NA,dim(grid)[1]-length(get("Y",x)[,biv.margin[1]])))
+          grid['yy'] <- c(get("Y",x)[,biv.margin[2]],rep(NA,dim(grid)[1]-length(get("Y",x)[,biv.margin[2]])))
+          
+          #browser()
+          obj1 <- contourplot(values, data=grid,outer=TRUE,sub=sub.txt,zlab=list(label=z.txt,cex=cex.axes),
+                               xlab=list(label=xlab,cex=cex.axes), ylab=list(label=ylab,cex=cex.axes),scales=list(arrows=FALSE,col="black",font=3,cex=cex),
+                               panel = function(contour,labels,cex,...)  panel.contourplot(contour=TRUE,labels=list(labels=TRUE,cex=cex.contour),...),
+                              zlim=c(0,max(grid)),main=main.txt,shade=TRUE,cuts=cuts,subscripts=TRUE)+layer(panel.points(x=xx,y=yy,subscripts=TRUE,under=TRUE,pch=1),data=grid)
+        }
         if(marg) {
           T.marg <- get("T.marg",x)
           base <- get("tilde.Psi.knots.d",x)

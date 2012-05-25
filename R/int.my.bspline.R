@@ -18,7 +18,7 @@
   y.all.help <- c()
   for(j in 1:(len.k-1)) {
     help.seq <-  seq(knots.val$val[j],knots.val$val[j+1],length=(q))
-    assign(paste("y.help",j,sep=""),help.seq,env=help.env)
+    assign(paste("y.help",j,sep=""),help.seq,envir=help.env)
     y.all.help <- c(y.all.help,help.seq)
   }
   
@@ -28,20 +28,20 @@
   
   for(j in 1:(len.k-1)) {
     list <- which(get("y",help.env)>=knots.val$val[j] & get("y",help.env)<=knots.val$val[j+1])
-    assign(paste("y.list",j,sep=""),list,env=help.env)
-    assign(paste("y.part",j,sep=""),get("y",help.env)[list],env=help.env)
+    assign(paste("y.list",j,sep=""),list,envir=help.env)
+    assign(paste("y.part",j,sep=""),get("y",help.env)[list],envir=help.env)
     for(i in 1:(dim(get("base.den",help.env))[2])) { 
-      assign(paste("base.part",j,i,sep=""),get("base.den",help.env)[list,i],env=help.env)
+      assign(paste("base.part",j,i,sep=""),get("base.den",help.env)[list,i],envir=help.env)
     }
   }  
 
   #for (i in 1:(len.k-(q-1))) {
   for(i in 1:(len.k-1)) {
-    compare <- get(paste("y.help",i,sep=""),env=help.env)
+    compare <- get(paste("y.help",i,sep=""),envir=help.env)
     list <- which(y.all.help%in%compare)
     for(j in 1:(dim(base.help)[2])) {
-      assign(paste("y.base.help",i,j,sep=""),base.help[list,j],env=help.env)
-      assign(paste("y.list.help",i,j,sep=""),list,env=help.env)
+      assign(paste("y.base.help",i,j,sep=""),base.help[list,j],envir=help.env)
+      assign(paste("y.list.help",i,j,sep=""),list,envir=help.env)
     }
   }
   
@@ -59,9 +59,9 @@
       if(q>=3) y.vec <- seq(y.vec[1],y.vec[3],length=4)
       if(q>=4) y.vec <- seq(y.vec[1],y.vec[4],length=5)
 
-      assign(paste("y.vec",i,sep=""),y.vec,env=help.env)
+      assign(paste("y.vec",i,sep=""),y.vec,envir=help.env)
  
-      assign(paste("coef",i,".",j,sep=""),(solve(outer(y.vec,0:q,"^"))%*%(get(paste("y.base.help",i,j,sep=""),env=help.env))),env=help.env)
+      assign(paste("coef",i,".",j,sep=""),(solve(outer(y.vec,0:q,"^"))%*%(get(paste("y.base.help",i,j,sep=""),envir=help.env))),envir=help.env)
 
     }
   }
@@ -74,7 +74,7 @@
 
       y2 <- knots.val$val[i+1]
       y1 <- knots.val$val[i]
-      coef <- get(paste("coef",i,".",j,sep=""),env=help.env)
+      coef <- get(paste("coef",i,".",j,sep=""),envir=help.env)
 
       y2 <- 1/(1:(q+1))*y2^(1:(q+1))
       y1 <- 1/(1:(q+1))*y1^(1:(q+1))

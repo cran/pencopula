@@ -113,7 +113,7 @@ lufth1 <- rank(data.lufth)/(length(data.lufth)+1)
 
 Y <- cbind(dbank1,lufth1)
 
-cop <- pencopula(Y,d=4,D=4,lambda=rep(50000,2))
+cop <- pencopula(Y,d=4,D=4,lambda=rep(5000,2))
 
 }
 

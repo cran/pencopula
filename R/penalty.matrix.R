@@ -63,11 +63,10 @@ if(get("base",penden.env)=="B-spline") {
 
   AA <- solve(Psi.A.d) %*% tilde.Psi.A.d
 
-#print(eigen(AA)$values)
+  assign("AA",AA,penden.env)
 
 # AA transformiert die normale B spline Basis
 # in die hierarchische Form (Matrix A in Deinen Aufzeichnungen) 
-
 
 # Erstellung der Differenzenmatrix
 # Differenzenordnung = B-spline Polynom
@@ -103,7 +102,7 @@ if(get("base",penden.env)=="B-spline") {
 
 # Penalisierungsmatrix fuer hierarchische B-splines
 
-  AIA <- crossprod(AA)
+  AIA <- crossprod(C%*%AA)
 
   assign("AIA",AIA,penden.env)
 
@@ -125,7 +124,6 @@ if(get("base",penden.env)=="B-spline") {
     j <- 1:DD
     DDD3[i,j,k] <- lambda[k] * ADA[Index.basis.D[i,k], Index.basis.D[j,k]]
     for (l in l.ind)   DDD3[i,j,k] <- DDD3[i,j,k] * AIA[Index.basis.D[i,l], Index.basis.D[j,l]]
-    #print(DDD3[,,k])
   }
   }
 

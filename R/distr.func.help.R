@@ -29,7 +29,7 @@ distr.func.help <- function(base,knots,penden.env,q,y,index) {
     if(q==2) help.seq <- knots.help[c(a,(a+b)/2,b)]
     if(q==3) help.seq <- knots.help[c(a,a+(b-a)/3,a+2*(b-a)/3,b)]
 
-    assign(paste("y.help",i,sep=""),help.seq,env=help.env)
+    assign(paste("y.help",i,sep=""),help.seq,envir=help.env)
     y.all.help <- c(y.all.help,help.seq)
   }  
 
@@ -39,12 +39,12 @@ distr.func.help <- function(base,knots,penden.env,q,y,index) {
   
   for(i in 1:(len.k-1)) {
     for (j in 1:(len.b)) {
-      compare <- get(paste("y.help",i,sep=""),env=help.env)#i oder j?
+      compare <- get(paste("y.help",i,sep=""),envir=help.env)#i oder j?
       list <- which(knots.help%in%compare)
       #print(list)
-      assign(paste("y.base.help",i,".",j,sep=""),base.help[list,j],env=help.env)
+      assign(paste("y.base.help",i,".",j,sep=""),base.help[list,j],envir=help.env)
       #print(base.help[list,j])
-      assign(paste("y.list.help",i,".",j,sep=""),list,env=help.env)
+      assign(paste("y.list.help",i,".",j,sep=""),list,envir=help.env)
     }
   }
   
@@ -71,8 +71,8 @@ for(j in 1:len.b) {
       #print(y.vec)
       #print(solve(outer(y.vec,0:q,"^")))
       #print(get(paste("y.base.help",i,".",j,sep=""),env=help.env))
-      assign(paste("y.vec",i,".",j,sep=""),y.vec,env=help.env)
-      assign(paste("coef",i,".",j,sep=""),(solve(outer(y.vec,0:q,"^"))%*%(get(paste("y.base.help",i,".",j,sep=""),env=help.env))),env=help.env)
+      assign(paste("y.vec",i,".",j,sep=""),y.vec,envir=help.env)
+      assign(paste("coef",i,".",j,sep=""),(solve(outer(y.vec,0:q,"^"))%*%(get(paste("y.base.help",i,".",j,sep=""),envir=help.env))),envir=help.env)
     }
   }
 
@@ -86,7 +86,7 @@ for(j in 1:len.b) {
   for(j in 1:len.b) {
     for(i in 1:(len.k-1)) {
       term <- paste("(",poly.part(i,j,knots,help.env,q,poly=TRUE),")",sep="")
-      assign(paste("distr.func",i,".",j,sep=""),paste("obj <-function(x){",term,"}"),env=func.env)
+      assign(paste("distr.func",i,".",j,sep=""),paste("obj <-function(x){",term,"}"),envir=func.env)
     }
   }
   
@@ -97,7 +97,7 @@ for(j in 1:len.b) {
     INT <- 0
     for(i in 1:(len.k-1)) {
       y.val <- rep(0,get("n",penden.env))
-      funcy <- get(paste("distr.func",i,".",j,sep=""),env=func.env)
+      funcy <- get(paste("distr.func",i,".",j,sep=""),envir=func.env)
       eval(parse(text=funcy))
       if(i<(len.k-1)) list <- which(knots.l[i] <=y & knots.l[i+1] > y)
       if(i==(len.k-1)) list <- which(knots.l[i] <=y & knots.l[i+1] >= y)

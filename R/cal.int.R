@@ -7,11 +7,11 @@
     for(j in 1:q) {
       y2 <- knots.val$val[i+1]
       y1 <- knots.val$val[i]
-      coef <- get(paste("coef",i,".",j,sep=""),env=help.env)
+      coef <- get(paste("coef",i,".",j,sep=""),envir=help.env)
       y2 <- 1/(1:(q+1))*y2^(1:(q+1))
       y1 <- 1/(1:(q+1))*y1^(1:(q+1))
       INT[j,i+count] <- sum(coef*y2)-sum(coef*y1)
-      assign(paste("INT",i,".",j,sep=""),INT[j,i+count],env=help.env)
+      assign(paste("INT",i,".",j,sep=""),INT[j,i+count],envir=help.env)
       count <- count+1
     }
   }

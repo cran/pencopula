@@ -3,14 +3,13 @@ Type: Package
 Title: Flexible Copula Density Estimation with Penalized Hierarchical
         B-Splines
 Version: 0.3.2
-Date: 2012-05-25
-Depends: R (>= 2.11.0), lattice, fda, quadprog, spam, latticeExtra
+Date: 2011-11-04
+Depends: R (>= 2.8.0), lattice, fda, quadprog, spam
 Author: Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>
 Maintainer: Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>
 Description: Flexible copula density estimation with penalized
         hierarchical B-Splines.
 License: GPL (>= 2)
 LazyLoad: yes
-Packaged: 2012-05-31 11:26:21 UTC; cschellhase
-Repository: CRAN
-Date/Publication: 2012-05-31 12:22:41
+Packaged: 2011-12-02 14:36:21 UTC; cschellhase
+Built: R 2.11.0; ; 2011-12-02 14:37:27 UTC; unix
