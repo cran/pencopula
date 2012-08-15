@@ -64,8 +64,9 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
   }
   if(base=="Bernstein") lambda <- rep(0,p)
   assign("lambda",lambda,penden.env)
-
   assign("dimension",dimension,penden.env)
+  
+    
 # Dimension gibt die Hierarchiestufe an, aus der der hierarchische B-spline berechnent wird
   
   ##################
@@ -178,74 +179,20 @@ pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALS
   #############################
 
   liste <- matrix(0,1,3+DD+p)
-  n.liste <- matrix(0,1,3+DD+p)
 
   lam <- coef <- c()
   for(i in 1:p) lam[i] <- paste("lambda.",i,sep="")
   for(j in 1:DD) coef[j] <- paste("b.",j,sep="")
  
   colnames(liste) <- c("pen.log.like","log.like","marg.log.like",lam,coef)
-  
-  #print("ck at the beginning")
    
   #print("fitted values at the beginning")
   help.str <- paste("d=",get("d",penden.env),"D=",get("D",penden.env),"lambda=",get("lambda",penden.env)[1],sep="")
   assign("help.str",help.str,penden.env)
-
-  f.hat.val(penden.env,cal=TRUE)
-    if(get("no",penden.env)) {
-    assign("pen.log.like",0,penden.env)
-    assign("log.like",0,penden.env)
-    assign("AIC",0,penden.env)
-    assign("cAIC",0,penden.env)
-    assign("BIC",0,penden.env)
-    #obj <- list(penden.env=penden.env)
-    class(penden.env) <- "pencopula"
-    return(penden.env)
-  }
-
-  #print(get("f.hat.val",penden.env))
-
-  #print("marg log-likelihood at the beginning")
-  pen.log.like(penden.env,cal=TRUE)
-  #print(get("log.like",penden.env))
-  Derv1(penden.env)
-  Derv2(penden.env)
-  #if(!fix.lambda) marg.likelihood(penden.env)
-  #print(get("marg.log.like",penden.env))
-
-  assign("i",i <- 1,penden.env)
-  liste[i,1] <- get("pen.log.like",penden.env)
-  liste[i,2] <- get("log.like",penden.env)
-  #if(!fix.lambda) liste[i,3] <- get("marg.log.like",penden.env)
-  liste[i,(4:(4+p-1))] <- get("lambda",penden.env)
-  liste[i,((4+p):(4+p+DD-1))] <- get("ck.val",penden.env)
-
   assign("liste",liste,penden.env)
+ 
+  calculate(penden.env)
   
-  assign("calc",TRUE,penden.env)
-  
-  Derv1(penden.env)
-  Derv2(penden.env)
-  if(new.weights(penden.env)=="fehler"){
-    assign("pen.log.like",0,penden.env)
-    assign("log.like",0,penden.env)
-    assign("AIC",0,penden.env)
-    assign("cAIC",0,penden.env)
-    assign("BIC",0,penden.env)
-    #obj <- list(penden.env=penden.env)
-    class(penden.env) <- "pencopula"
-    return(penden.env)
-  }
-
-  my.loop(penden.env)
-  
-  Derv1(penden.env)
-  Derv2(penden.env)
-
-  my.IC(penden.env)
-
-  #obj <- list(penden.env=penden.env)
   class(penden.env) <- "pencopula"
   return(penden.env)
 }

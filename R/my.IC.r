@@ -1,9 +1,12 @@
 my.IC <- function(penden.env) {
-  #values <- -eigen(get("Derv2.cal",penden.env))$values
-  #rho <- min(values[values>1e-09])
-  #d <- dim(get("Derv2.cal",penden.env))[1]
-  #mytrace2 <- sum(diag(solve(get("Derv2.pen",penden.env)+rho*diag(d))%*%(get("Derv2.cal",penden.env)+rho*diag(d))))
-  if(get("base",penden.env)=="B-spline") mytrace <- sum(diag(solve(get("Derv2.pen",penden.env))%*%(get("Derv2.cal",penden.env))))#-get("linear.con",penden.env)
+  aa <- try(solve(get("Derv2.pen",penden.env)))
+  eps <- 1e+08
+  i <- 1
+  while(class(aa)=="try-error") {
+    aa <- try(solve(get("Derv2.pen",penden.env)+diag(i*eps,dim(get("Derv2.pen",penden.env))[1])))
+    i <-  i+1
+  }
+  if(get("base",penden.env)=="B-spline") mytrace <- sum(diag(aa%*%(get("Derv2.cal",penden.env))))#-get("linear.con",penden.env)
   if(get("base",penden.env)=="Bernstein") mytrace <- get("DD",penden.env)#-get("linear.con",penden.env)
 
   #if(get("base",penden.env)=="B-spline") {

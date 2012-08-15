@@ -4,13 +4,11 @@ penalty.matrix <- function(penden.env,temp=FALSE) {
  
 if(get("base",penden.env)=="B-spline") {
   d <-  get("d",penden.env)
-
   alpha <- get("alpha",penden.env)
   q <- get("q",penden.env)
   ddb <- get("ddb",penden.env)
   dd <- get("dd",penden.env)
   DD <- get("DD",penden.env)
-  
   Index.basis.D <- get("Index.basis.D",penden.env)
   p <- get("p",penden.env)
   

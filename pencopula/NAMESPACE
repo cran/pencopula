@@ -1,2 +1,0 @@
-import(fda,lattice,spam,quadprog)
-export(pencopula,plot.pencopula,print.pencopula,hierarch.bs,my.bspline)

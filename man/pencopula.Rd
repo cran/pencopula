@@ -8,7 +8,7 @@
   datasets. The response is called 'y', the covariates 'x'. We estimate
   densities using penalized hierarchical B-splines. This is done by
   choosing the polynomial degree of the univariate B-spline density
-  basis, that is built uopn 2^d+1 equidistant knots. 'd' refers to the
+  basis, that is built upon 2^d+1 equidistant knots. 'd' refers to the
   hierachy level of the marginal hierarchical  B-spline and 'D' to the
   maximum hierarchical level of the hierarchical B-spline basis. We penalize the m-order differences of the coefficients 'b' to estimate new weights 'b'.
 }
@@ -97,7 +97,7 @@ For a fast overview of the main results, one can use the function 'print.pencopu
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
 
 \examples{
-
+library(MASS)
 data(Lufthansa)
 data(DeutscheBank)
 
@@ -105,15 +105,18 @@ data.dbank <- data.lufth <- c()
 
 dim.data <- dim(DeutscheBank)[1]
 
-for(i in 2:dim.data) data.dbank[i-1] <- DeutscheBank[i,2]/DeutscheBank[i-1,2]
-for(i in 2:dim.data) data.lufth[i-1] <- Lufthansa[i,2]/Lufthansa[i-1,2]
+for(i in 2:dim.data) data.dbank[i-1] <- log(DeutscheBank[i,2]/DeutscheBank[i-1,2])
+for(i in 2:dim.data) data.lufth[i-1] <- log(Lufthansa[i,2]/Lufthansa[i-1,2])
 
-dbank1 <- rank(data.dbank)/(length(data.dbank)+1)
-lufth1 <- rank(data.lufth)/(length(data.lufth)+1)
+dbank1 <- fitdistr(data.dbank,"t")
+lufth1 <- fitdistr(data.lufth,"t")
 
-Y <- cbind(dbank1,lufth1)
+mypt <- function(x, m, s, df) pt((x-m)/s, df)
 
-cop <- pencopula(Y,d=4,D=4,lambda=rep(5000,2))
+Y <- cbind(mypt(data.dbank,dbank1$estimate[1],s=dbank1$estimate[2],df=dbank1$estimate[3]),
+mypt(data.lufth,lufth1$estimate[1],s=lufth1$estimate[2],df=lufth1$estimate[3]))
+
+cop <- pencopula(Y,d=4,D=4,lambda=rep(10,2))
 
 }
 
