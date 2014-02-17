@@ -64,9 +64,8 @@ zlab=NULL, biv.margin=NULL, show.observ=FALSE,...)
   calculated density or distribution values for the set 'val'.
 }
 
-\references{Flexible Copula Density Estimation with Penalized
-  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
-
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}
 \keyword{plot}
 

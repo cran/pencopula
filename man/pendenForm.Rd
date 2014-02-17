@@ -17,5 +17,6 @@ pendenForm(penden.env)
 Returning the values 'Y', the number of values 'n' and covariates 'p'.
 }
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
-
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}
 \keyword{IO}

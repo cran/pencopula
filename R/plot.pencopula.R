@@ -1,8 +1,6 @@
  plot.pencopula <- function(x,val=NULL,marg=TRUE,plot=TRUE,int=FALSE,main.txt=NULL,
                     sub.txt=NULL,contour=FALSE,cond=NULL,cuts=20,cex=1,cex.axes=1,cex.contour=1,
                     xlab=NULL,ylab=NULL,zlab=NULL,biv.margin=NULL,show.observ=FALSE,...) {
-  library(lattice)
-  library(latticeExtra)
   env <- list()
   p <- get("p",x)
   q <- get("q",x)
@@ -135,10 +133,11 @@
                                  zlim=c(0,max(grid)),main=main.txt,shade=TRUE,cuts=cuts,subscripts=TRUE)
 
         if(contour&show.observ) {
+          yy <- NA
+          rm(yy)
           grid['xx'] <- c(get("Y",x)[,biv.margin[1]],rep(NA,dim(grid)[1]-length(get("Y",x)[,biv.margin[1]])))
           grid['yy'] <- c(get("Y",x)[,biv.margin[2]],rep(NA,dim(grid)[1]-length(get("Y",x)[,biv.margin[2]])))
-          
-          #browser()
+ 
           obj1 <- contourplot(values, data=grid,outer=TRUE,sub=sub.txt,zlab=list(label=z.txt,cex=cex.axes),
                                xlab=list(label=xlab,cex=cex.axes), ylab=list(label=ylab,cex=cex.axes),scales=list(arrows=FALSE,col="black",font=3,cex=cex),
                                panel = function(contour,labels,cex,...)  panel.contourplot(contour=TRUE,labels=list(labels=TRUE,cex=cex.contour),...),

@@ -54,7 +54,8 @@ int.my.bspline(help.env)
 \note{
 This functions uses the fda-package to build the B-Spline density basis.
 }
-
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}
 
 \keyword{math}
 

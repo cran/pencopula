@@ -89,7 +89,8 @@ for(j in 1:len.b) {
       assign(paste("distr.func",i,".",j,sep=""),paste("obj <-function(x){",term,"}"),envir=func.env)
     }
   }
-  
+  obj <- NA
+  rm(obj)
   y.val <- rep(0,get("n",penden.env))
   int.base <- matrix(0,dim(base)[1],dim(base.help)[2])
   

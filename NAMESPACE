@@ -1,2 +1,4 @@
-import(fda,lattice,spam,quadprog)
+import(fda,lattice,quadprog)
+importFrom(latticeExtra,layer)
 export(pencopula,plot.pencopula,print.pencopula,hierarch.bs,my.bspline)
+

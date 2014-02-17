@@ -23,7 +23,7 @@ Calculating the actual fitted values of the response, depending on the actual pa
   \item{f.hat.val}{Fitted values for the current coefficents}.
   f.hat.val is saved in the environment.
 }
-\references{Flexible Copula Density Estimation with Penalized
-  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
 \keyword{nonparametric}
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}

@@ -31,9 +31,9 @@ BIC is calculated as
   \item{BIC}{sum of twice the non-penalized log likelihood and log(n)}
   All values are saved in the environment.
 }
-\references{Flexible Copula Density Estimation with Penalized
-  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
 
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
 \keyword{math}
 
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}

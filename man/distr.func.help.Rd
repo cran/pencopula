@@ -38,9 +38,9 @@ poly.part(i,j,knots,help.env,q, yi=NULL, poly=FALSE)
 \item{distr.func.help}{creating environment 'help.env', creating help points between each two neighbouring knots and calculates the integral each basis}
 \item{poly.part}{using in 'distr.func.help' for creating the polynomial functions of each interval of each two neighbouring knots}
 }
-\references{Flexible Copula Density Estimation with Penalized
-  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
-\author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
 
+\author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}
 
 \keyword{math}

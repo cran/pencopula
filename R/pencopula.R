@@ -2,12 +2,6 @@
 pencopula <- function(data,d=3,D=d,q=1,base="B-spline",max.iter=20,plot.bsp=FALSE,
                     lambda=NULL,pen.order=2,adapt.grid=FALSE,add=TRUE,
                     alpha=0,symmetric=TRUE,data.frame=parent.frame()) {
-
-  library(quadprog)
-  library(fda)
-  library(spam)
-  library(lattice)
-
   penden.env <- new.env()
   assign("frame",data.frame,penden.env)
   assign("Y",data,penden.env)

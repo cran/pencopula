@@ -92,12 +92,10 @@ For a fast overview of the main results, one can use the function 'print.pencopu
   AIC=0 and BIC=0. Please restart the estimation, e.g. with a different
   penalty parameter.}
 
-\references{Flexible Copula Density Estimation with Penalized
-  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
 
 \examples{
-library(MASS)
+require(MASS)
 data(Lufthansa)
 data(DeutscheBank)
 
@@ -121,3 +119,6 @@ cop <- pencopula(Y,d=4,D=4,lambda=rep(10,2))
 }
 
 \keyword{nonparametric}
+
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}

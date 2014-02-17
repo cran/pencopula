@@ -22,7 +22,7 @@ The calculation depends on the estimated weights b, the penalized
 hierarchical B-splines Phi and the penalty paramters lambda.\cr
 \deqn{l(b,\lambda)=\sum_{i=1}^{n} \left[ \log \{\sum_{i=1}^n
   \boldsymbol\Phi(u_i)\} b\right]- \frac 12 b^T \boldsymbol{P}(\lambda) b}{%
-  \eqn{l(beta,lambda)=sum(log(\Phi(u_i)b))-0.5*b^T \tilde{P} b}}
+  \eqn{l(beta,lambda)=sum(log(\Phi(u_i)b))-0.5*b^T \tilde{P}(\lambda) b}}
 with
 \deqn{\boldsymbol{P}(\lambda)=\sum_{j=1}{p}\lambda_j\boldsymbol{P}_j}
 
@@ -34,9 +34,10 @@ The needed values are saved in the environment.
   \item{log.like}{Log-Likelihood of the copula density.}
 The values are saved in the environment.
 }
-\references{Flexible Copula Density Estimation with Penalized
-  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
+
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
 
 \keyword{nonparametric}
 
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}

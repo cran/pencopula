@@ -128,7 +128,7 @@ if(get("base",penden.env)=="B-spline") {
   DDD.sum <- DDD3[,,1]
   for(j in 2:p) DDD.sum <- DDD.sum+DDD3[,,j]
   
-  DDD.sum <- as.spam(DDD.sum)
+  #DDD.sum <- as.spam(DDD.sum)
 
   if(!temp) {
     assign("DDD.sum",DDD.sum,penden.env)

@@ -20,11 +20,11 @@ penalty.matrix(penden.env, temp = FALSE)
 
 \details{The penalty matrix is calculated as
 
-  \eqn{P=\sum_{j=1}^{p} \lambda_j P(\lambda)_j}
+  \eqn{P(\lambda)=\sum_{j=1}^{p} \lambda_j P_j}
 
   with
 
-  \eqn{P(\lambda)_j=\left(\bigotimes_{l=1}^{j-1}{I}\right) \otimes \{({A^{-1})^T} P {A}^{-1}\} \otimes \left(\bigotimes_{l=j+1}^p {I}\right)}
+  \eqn{P_j=\left(\bigotimes_{l=1}^{j-1}{I}\right) \otimes \{({A^{-1})^T} P {A}^{-1}\} \otimes \left(\bigotimes_{l=j+1}^p {I}\right)}
 
   The needed values are calculated or saved in the environment 'penden.env'.
 
@@ -35,9 +35,10 @@ penalty.matrix(penden.env, temp = FALSE)
   \item{DDD.sum}{Penalty matrix P}
   Matrix is saved in the environment.
 }
-\references{Flexible Copula Density Estimation with Penalized
-  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2011), to appear.}
+
 \author{Christian Schellhase <cschellhase@wiwi.uni-bielefeld.de>}
 
 \keyword{nonparametric}
 
+\references{Flexible Copula Density Estimation with Penalized
+  Hierarchical B-Splines, Kauermann G., Schellhase C. and Ruppert, D. (2013), Scandinavian Journal of Statistics 40(4), 685-705.}
