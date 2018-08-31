@@ -2,3 +2,8 @@ import(fda,lattice,quadprog)
 importFrom(latticeExtra,layer)
 export(pencopula,plot.pencopula,print.pencopula,hierarch.bs,my.bspline)
 
+S3method(plot, pencopula)
+S3method(print, pencopula)
+
+importFrom("stats", "as.formula", "ecdf", "median", "quantile")
+
